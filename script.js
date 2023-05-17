@@ -1,17 +1,25 @@
 let choice = ["rock","paper","scissors"];
 let result;
+
+const btn = document.querySelector('.rock');
+btn.addEventListener('click', playRound);
+
+const btn2 = document.querySelector('.paper');
+btn2.addEventListener('click', playRound);
+
+const btn3 = document.querySelector('.scissors');
+btn3.addEventListener('click', playRound)
+
+
 //one round of the game
 function playRound(_computerChoice, _playerChoice){
-    _playerChoice = prompt("Enter your choice","").toLowerCase();
-    console.log(`Player Choice = ${_playerChoice}`);
+    _playerChoice = this.textContent.toLowerCase();
 
     function getComputerChoice(x){
         x = choice[(Math.floor(Math.random() * choice.length))];
         return x;
     }
-
     _computerChoice = getComputerChoice();
-    console.log(`Computer Choice = ${_computerChoice}`);
 
     if(_computerChoice === _playerChoice){
         result = "It's a tie";
@@ -28,17 +36,24 @@ function playRound(_computerChoice, _playerChoice){
     else{
         result = "You lose, Computer wins";
     }
-    return result;
+    const container = document.querySelector('#container');
+    const message = document.createElement('div');
+    message.textContent = `You chose ${_playerChoice} and computer chose ${_computerChoice}. That means ` + result
+    container.appendChild(message);
+
+    setTimeout(function() {
+        container.removeChild(message);
+      }, 3000); 
+    countResult();
 }
 
 
 let computerWin=0;
 let playerWin=0;
 
-//need this function to play one round five times
-function playGame(){
-    for(i=0 ; i<5 ; i++){
-        console.log(playRound());
+//win counter
+
+function countResult(){
         if(result == "You win"){
             playerWin += 1;
         }
@@ -49,8 +64,10 @@ function playGame(){
             playerWin = playerWin;
             computerWin = computerWin;
         }
+        console.log("Player win = " + playerWin);
+        console.log("Computer Win = " + computerWin);   
     }
-}
+/*
 //stores the final result
 function getFinalResult(){
     playGame();
@@ -68,6 +85,4 @@ function getFinalResult(){
     else finalResult = "Entire game is a tie";
 
     return finalResult;
-}
-
-console.log("Result : " + getFinalResult());
+}*/
