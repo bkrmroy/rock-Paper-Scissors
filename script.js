@@ -1,14 +1,14 @@
 let choice = ["rock","paper","scissors"];
 let result;
 
-const btn = document.querySelector('.rock');
-btn.addEventListener('click', playRound);
+const buttonRock = document.querySelector('.rock');
+buttonRock.addEventListener('click', playRound);
 
-const btn2 = document.querySelector('.paper');
-btn2.addEventListener('click', playRound);
+const buttonPaper = document.querySelector('.paper');
+buttonPaper.addEventListener('click', playRound);
 
-const btn3 = document.querySelector('.scissors');
-btn3.addEventListener('click', playRound)
+const buttonScissors = document.querySelector('.scissors');
+buttonScissors.addEventListener('click', playRound)
 
 
 //one round of the game
@@ -68,23 +68,31 @@ function countResult(){
         const computer = document.querySelector('.computer');
         player.textContent = player.textContent.substring(0, player.textContent.length - 1) + playerWin ;
         computer.textContent = computer.textContent.substring(0, computer.textContent.length -1) + computerWin;
+        getFinalResult();
     }
-/*
+
 //stores the final result
+
 function getFinalResult(){
-    playGame();
-    console.log("Number of times you won = " + playerWin);
-    console.log("Number of times computer won = " + computerWin);
-    console.log("Number of ties = " + (5-(computerWin + playerWin)));
-
-    let finalResult; //decides the final winner
-    if(playerWin > computerWin){
-        finalResult = "Congrats, You won the game";
+    if(playerWin == 5 ){
+        console.log("You won the game");
+        const result = document.querySelector(".result");
+        result.textContent="You've won the game";
+        result.setAttribute('style', 'color : green; font-size: 40px;');
+        
+        buttonRock.disabled = true;
+        buttonPaper.disabled = true;
+        buttonScissors.disabled = true;
+        
     }
-    else if(computerWin > playerWin){
-        finalResult = "You lost the game, Computer won";
-    }
-    else finalResult = "Entire game is a tie";
+    else if(computerWin == 5){
+        const result = document.querySelector(".result");
+        result.textContent="You've lost the game";
+        result.setAttribute('style', 'color : red; font-size: 40px;');
 
-    return finalResult;
-}*/
+        buttonRock.disabled = true;
+        buttonPaper.disabled = true;
+        buttonScissors.disabled = true;
+        
+    }
+}
