@@ -38,7 +38,7 @@ function playRound(_computerChoice, _playerChoice){
     }
     const container = document.querySelector('#container');
     const message = document.createElement('div');
-    message.textContent = `You chose ${_playerChoice} and computer chose ${_computerChoice}. That means ` + result
+    message.textContent = `You chose ${_playerChoice} and computer chose ${_computerChoice}. ` + result
     container.appendChild(message);
 
     setTimeout(function() {
@@ -63,9 +63,11 @@ function countResult(){
         else{
             playerWin = playerWin;
             computerWin = computerWin;
-        }
-        console.log("Player win = " + playerWin);
-        console.log("Computer Win = " + computerWin);   
+        } 
+        const player = document.querySelector('.player');
+        const computer = document.querySelector('.computer');
+        player.textContent = player.textContent.substring(0, player.textContent.length - 1) + playerWin ;
+        computer.textContent = computer.textContent.substring(0, computer.textContent.length -1) + computerWin;
     }
 /*
 //stores the final result
