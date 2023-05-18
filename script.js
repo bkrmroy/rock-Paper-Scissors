@@ -11,16 +11,18 @@ const buttonScissors = document.querySelector('.scissors');
 buttonScissors.addEventListener('click', playRound)
 
 
+function getComputerChoice(x){
+    x = choice[(Math.floor(Math.random() * choice.length))];
+    return x;
+}
+
 //one round of the game
 function playRound(_computerChoice, _playerChoice){
-    _playerChoice = this.textContent.toLowerCase();
 
-    function getComputerChoice(x){
-        x = choice[(Math.floor(Math.random() * choice.length))];
-        return x;
-    }
+    _playerChoice = this.textContent.toLowerCase();
     _computerChoice = getComputerChoice();
 
+    //game condition
     if(_computerChoice === _playerChoice){
         result = "It's a tie";
     }
@@ -34,8 +36,10 @@ function playRound(_computerChoice, _playerChoice){
         result = "You win";
     }
     else{
-        result = "You lose, Computer wins";
+        result = "You lose";
     }
+
+    //display the result of each round
     const container = document.querySelector('#container');
     const message = document.createElement('div');
     message.textContent = `You chose ${_playerChoice} and computer chose ${_computerChoice}. ` + result
@@ -44,6 +48,8 @@ function playRound(_computerChoice, _playerChoice){
     setTimeout(function() {
         container.removeChild(message);
       }, 3000); 
+
+    //call the countResult() function to count the number of wins and display them
     countResult();
 }
 
@@ -51,27 +57,28 @@ function playRound(_computerChoice, _playerChoice){
 let computerWin=0;
 let playerWin=0;
 
-//win counter
-
 function countResult(){
-        if(result == "You win"){
-            playerWin += 1;
-        }
-        else if(result == "You lose, Computer wins"){
-            computerWin +=1;
-        }
-        else{
-            playerWin = playerWin;
-            computerWin = computerWin;
-        } 
-        const player = document.querySelector('.player');
-        const computer = document.querySelector('.computer');
-        player.textContent = player.textContent.substring(0, player.textContent.length - 1) + playerWin ;
-        computer.textContent = computer.textContent.substring(0, computer.textContent.length -1) + computerWin;
-        getFinalResult();
+    if(result == "You win"){
+        playerWin += 1;
+    }
+    else if(result == "You lose"){
+        computerWin +=1;
+    }
+    else{
+        playerWin = playerWin;
+        computerWin = computerWin;
+    } 
+    //display the number of wins
+    const player = document.querySelector('.player');
+    const computer = document.querySelector('.computer');
+    player.textContent = player.textContent.substring(0, player.textContent.length - 1) + playerWin ;
+    computer.textContent = computer.textContent.substring(0, computer.textContent.length -1) + computerWin;
+    
+    //call the getFinalResult() to count and display the result of the full game
+    getFinalResult();
+
     }
 
-//stores the final result
 
 function getFinalResult(){
     if(playerWin == 5 ){
@@ -83,6 +90,9 @@ function getFinalResult(){
         buttonRock.disabled = true;
         buttonPaper.disabled = true;
         buttonScissors.disabled = true;
+
+        //call this function to show a play again button
+        addPlayAgain();
         
     }
     else if(computerWin == 5){
@@ -93,6 +103,39 @@ function getFinalResult(){
         buttonRock.disabled = true;
         buttonPaper.disabled = true;
         buttonScissors.disabled = true;
+
+        //call this function to show a play again button
+        addPlayAgain();
         
     }
+}
+function addPlayAgain(){
+    const playAgainContainer = document.querySelector(".playAgain");
+    const btnPlayAgain = document.createElement("button");
+    btnPlayAgain.classList.add('btnPlayAgain');
+    btnPlayAgain.textContent = "Play Again?";
+    playAgainContainer.appendChild(btnPlayAgain);
+    btnPlayAgain.addEventListener('click', playAgain); //call the playAgain() function to reset the game
+}
+
+function playAgain(){
+    buttonRock.disabled = false;
+    buttonPaper.disabled =false;
+    buttonScissors.disabled = false;
+
+    computerWin=0;
+    playerWin=0;
+    const result = document.querySelector(".result");
+    result.textContent="";
+
+    const parent = document.querySelector(".playAgain");
+    const child = document.querySelector(".btnPlayAgain");
+    parent.removeChild(child);
+
+    const player = document.querySelector('.player');
+    const computer = document.querySelector('.computer');
+    player.textContent = player.textContent.substring(0, player.textContent.length - 1) + '0';
+    computer.textContent = computer.textContent.substring(0, computer.textContent.length -1) + '0';
+
+
 }
